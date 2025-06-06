@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const fetch = require('node-fetch');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const app = express();
 const port = 3001;
@@ -16,7 +18,8 @@ app.post('/api/chat', async (req, res) => {
         const { message } = req.body;
         console.log('Received message from client:', message);
         
-        const apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=GEMINI_API_KEY';
+        const apiKey = process.env.GEMINI_API_KEY;
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
         console.log('Sending request to Gemini API...');
         
         const response = await fetch(apiUrl, {
